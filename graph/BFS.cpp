@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main()
+{
+    int V, E;
+
+    cout << "Enter number of vertices: ";
+    cin >> V;
+
+    vector<vector<int>> graph(V);
+
+    cout << "Enter number of edges: ";
+    cin >> E;
+
+    cout << "Enter edges (u v):" << endl;
+    for (int i = 0; i < E; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);   // Remove this line for directed graph
+    }
+
+    int start;
+    cout << "Enter starting vertex: ";
+    cin >> start;
+
+    vector<bool> visited(V, false);
+    queue<int> q;
+
+    visited[start] = true;
+    q.push(start);
+
+    cout << "BFS Traversal: ";
+
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+
+        cout << node << " ";
+
+        for (int neighbor : graph[node])
+        {
+            if (!visited[neighbor])
+            {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+
+    return 0;
+}
